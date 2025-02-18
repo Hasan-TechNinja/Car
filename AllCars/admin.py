@@ -8,6 +8,7 @@ class CarModelAdmin(admin.ModelAdmin):
         'id',
         'name',
         'description',
+        'price',
         'status',
     )
 admin.site.register(Car, CarModelAdmin)
