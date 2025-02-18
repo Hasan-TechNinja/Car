@@ -10,3 +10,12 @@ class Car(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class ShowRoom(models.Model):
+    name = models.CharField(max_length=100)
+    location = models.CharField(max_length=200)
+    website = models.URLField()
+    
+    def __str__(self):
+        return self.name

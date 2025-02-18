@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from . models import Car
+from . models import Car, ShowRoom
 
 
 class CarSerializers(serializers.ModelSerializer):
@@ -18,8 +18,6 @@ class CarSerializers(serializers.ModelSerializer):
     #     if value <= 20000:    
     #         return serializers.ValidationError('Price mustbe gretter then 2000')
     #     return value
-    
-
 
 
     # id = serializers.IntegerField(read_only = True)
@@ -37,3 +35,9 @@ class CarSerializers(serializers.ModelSerializer):
     #     instance.status = validated_data.get('status', instance.status)
     #     instance.save()
     #     return instance
+
+
+class ShowRoomSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ShowRoom
+        fields = "__all__"
