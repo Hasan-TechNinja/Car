@@ -7,5 +7,6 @@ urlpatterns = [
     # path('details/', views.carDetails, name='details'),
     path('showroom/', views.ShowRoomView.as_view(), name='showroom'),
     path('showroom/<int:pk>', views.ShowRoomView.as_view(), name='showroom'),
+    path('roomdetails/<int:pk>/', views.ShowRoomDetailsView.as_view(), name='room-details'),
 
 ]

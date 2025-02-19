@@ -7,6 +7,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND
 
 
 # Create your views here.
@@ -49,7 +50,25 @@ class ShowRoomView(APIView):
 
 
 
+class ShowRoomDetailsView(APIView):
+    def get(self, request, pk):
+        showroom = get_object_or_404(ShowRoom, pk=pk)
+        serializer = ShowRoomSerializers(showroom)
+        return Response(serializer.data)
+    
+    def put(self, request, pk):
+        showroom = ShowRoom.objects.get(pk=pk)
+        serializer = ShowRoomSerializers(showroom, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
 
+    def delete(self, request, pk):
+        showroom = get_object_or_404(ShowRoom, pk=pk)
+        showroom.delete()
+        return Response({"message": "Showroom deleted successfully"}, status=HTTP_204_NO_CONTENT)
 
 
 # def AllCars(request):
