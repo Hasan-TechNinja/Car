@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from . models import Car, ShowRoom
-from . serializers import CarSerializers, ShowRoomSerializers
+from . models import Car, ShowRoom, Bike
+from . serializers import CarSerializers, ShowRoomSerializers, BikeSerializers
 from django.http import JsonResponse
 from django.shortcuts import get_list_or_404, get_object_or_404
 
@@ -70,6 +70,39 @@ class ShowRoomDetailsView(APIView):
         showroom.delete()
         return Response({"message": "Showroom deleted successfully"}, status=HTTP_204_NO_CONTENT)
 
+class BikeView(APIView):
+    def get(self, request):
+        bike = Bike.objects.all()
+        serializer = BikeSerializers(bike, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = BikeSerializers(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+
+class BikeDetails(APIView):
+    def get(self, request, pk):
+        bike = get_object_or_404(Bike, pk=pk)
+        serializer = BikeSerializers(bike)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        bike = Bike.objects.get(pk=pk)
+        serializer = BikeSerializers(bike, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+        
+    def delete(self, request, pk):
+        bike = get_object_or_404(Bike, pk = pk)
+        bike.delete()
+        return Response()
 
 # def AllCars(request):
 #     cars = Car.objects.all()

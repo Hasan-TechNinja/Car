@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from . models import Car, ShowRoom
+from . models import Car, ShowRoom, Bike
 
 
 class CarSerializers(serializers.ModelSerializer):
@@ -40,4 +40,10 @@ class CarSerializers(serializers.ModelSerializer):
 class ShowRoomSerializers(serializers.ModelSerializer):
     class Meta:
         model = ShowRoom
+        fields = "__all__"
+
+
+class BikeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Bike
         fields = "__all__"
