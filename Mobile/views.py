@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from . models import Mobile, Brand
-from .serializers import BrandSerializers, MobileSerializers
+from . models import Mobile, Brand, Review
+from .serializers import BrandSerializers, MobileSerializers, ReviewSerializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -56,3 +56,18 @@ class MobileDetails(APIView):
         mobile = get_object_or_404(Mobile, pk=pk)
         mobile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class ReviewView(APIView):
+    def get(self, request):
+        review = Review.objects.all()
+        serializer = ReviewSerializers(review, many=True)
+        return Response(serializer.data)
+        
+    def post(self, request):
+        serializer = ReviewSerializers(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

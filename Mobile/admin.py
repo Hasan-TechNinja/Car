@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Brand, Mobile
+from . models import Brand, Mobile, Review
 
 # Register your models here.
 
@@ -21,3 +21,16 @@ class MobileModelAdmin(admin.ModelAdmin):
         'brand',
     )
 admin.site.register(Mobile, MobileModelAdmin)
+
+
+class ReviewModelAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'mobile',
+        'rating',
+        'comment',
+        'created',
+        'updated'
+    )
+
+admin.site.register(Review, ReviewModelAdmin)
